@@ -20,7 +20,7 @@ class App extends Component {
   };
 
   createContact = ({ name, number }) => {
-    const sameName = this.state.contacts.find(
+    const sameName = this.state.contacts.some(
       contact => contact.name === name || contact.number === number,
     );
     if (sameName) {
@@ -40,26 +40,25 @@ class App extends Component {
     }
   };
 
-  getFilteredContacts = (contacts, filterStr) => {
+  getFilteredContacts = () => {
+    const { contacts, filter } = this.state;
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filterStr.toLowerCase()),
+      contact.name.toLowerCase().includes(filter.toLowerCase()),
     );
   };
 
   removeContact = (contactId) => {
-this.setState(prevState => ({contacts: prevState.contacts.filter(({id})=> id !== contactId)}))
+    this.setState(prevState => ({ contacts: prevState.contacts.filter(({ id }) => id !== contactId) }))
   }
 
   render() {
-    const { contacts, filter } = this.state;
-    const filteredContacts = this.getFilteredContacts(contacts, filter);
     return (
       <div className={styles.container}>
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.createContact} />
         <h2>Contacts</h2>
-        <Filter value={filter} onChangeFilter={this.handleInput} />
-        <ContactList contacts={filteredContacts} onRemoveContact={this.removeContact}/>
+        <Filter value={this.state.filter} onChangeFilter={this.handleInput} />
+        <ContactList contacts={this.getFilteredContacts()} onRemoveContact={this.removeContact} />
       </div>
     );
   }
