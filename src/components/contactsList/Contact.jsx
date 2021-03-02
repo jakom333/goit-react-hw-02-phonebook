@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 import styles from './ContactList.module.css'
 
 const Contact = ({ contact, onRemoveContact }) => {
-  const removeContact = () => {
-    onRemoveContact(contact.id)
-  }
+
   return (
     <p className={styles.item}>
       {contact.name}: <span>{contact.number}</span>
-      <button className={styles.btn} type="button" onClick={removeContact}>
+      <button className={styles.btn} data-id={contact.id} type="button" onClick={onRemoveContact}>
         X
       </button>
     </p>

@@ -47,7 +47,8 @@ class App extends Component {
     );
   };
 
-  removeContact = (contactId) => {
+  removeContact = ({ target }) => {
+    const contactId = target.dataset.id;
     this.setState(prevState => ({ contacts: prevState.contacts.filter(({ id }) => id !== contactId) }))
   }
 
